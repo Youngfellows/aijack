@@ -1,0 +1,192 @@
+1、拉取代码
+	git clone 地址
+	git clone https://github.com/Bilibili/ijkplayer.git ijkplayer-android  # 拉取到某个目录
+
+2、拉取分支
+	git pull origin 分支名
+
+3、查看分支
+	git branch -a 
+
+4、查看修改状态
+	git status
+
+5、添加关联
+	git add .
+
+6、提交本地仓库
+	git commit -m "修改xxx" 
+
+7、提交到仓库
+	git push origin 分支名
+
+8、清除版本控制标记
+	git rm -r --cached .
+
+9、切换分支
+	git checkout 分支名
+
+10、合并分支
+	git merge --no-ff -m "合并的信息(TAG)" develop
+
+11、git 本地删除后拉取服务端最新代码
+	
+	单个文件
+	11.1、git checkout -- a.php
+	
+	11.2、git checkout a.php
+	
+	当前目录
+	11.3、git checkout HEAD
+	   git reset --hard HEAD
+	  
+	11.4、git checkout .
+	
+12、Git pull 强制覆盖本地文件
+	git fetch --all
+	git reset --hard origin/master
+	git pull
+		
+
+13、git 回到上一个版本
+	git reset --hard HEAD
+
+
+14、拉取某个分支
+	git clone -b T6-1.0 https://gitlab.spetechcular.com/aios/iot-aios-android-adapter.git
+	
+
+14、拉取某个分支
+	git branch -r #查看远程分支
+	git branch -a #查看所有分支
+	git checkout 分支名
+
+15、给当前分支打标签
+	git tag tag-T6-v1.0.2
+	git push origin --tags
+
+16、查看tag
+	git tag
+
+17、拉取某个tag代码
+	git checkout tag标签名
+
+
+18、 查看本地分支最新版本号(commit id) 
+     git rev-parse HEAD 或者 git rev-parse --short HEAD   (commit id 简写)
+
+19、查看远程分支最新的版本号(commit id) 
+    git rev-parse master  或 git rev-parse origin    或者 git rev-parse --short origin  (或：master)
+
+
+20、解决冲突
+	
+	git stash
+	git pull
+	git stash pop
+
+	通过git stash将工作区恢复到上次提交的内容，同时备份本地所做的修改，之后就可以正常git pull了，git pull完成后，执行git stash pop将之前本地做的修改应用到当前工作区。
+
+	git stash: 备份当前的工作区的内容，从最近的一次提交中读取相关内容，让工作区保证和上次提交的内容一致。同时，将当前的工作区内容保存到Git栈中。
+
+	git stash pop: 从Git栈中读取最近一次保存的内容，恢复工作区的相关内容。由于可能存在多个Stash的内容，所以用栈来管理，pop会从最近的一个stash中读取内容并恢复。
+
+	git stash list: 显示Git栈内的所有备份，可以利用这个列表来决定从那个地方恢复。
+
+	git stash clear: 清空Git栈。此时使用gitg等图形化工具会发现，原来stash的哪些节点都消失了。
+	
+21、删除文件
+	git add -u
+
+22、创建附注标签
+	git tag v0.2.0 -light
+	git tag -a v0.1.0 -m "release 0.1.0 version"
+
+23、查看tag
+	git tag 
+	git tag -l 'v0.1.*'
+	git show v0.1.0
+
+24、切换标签
+	git checkout  tag名称
+
+25、删除标签
+	git tag -d v0.1.2
+
+26、补打标签
+	给指定的commit打标签
+	git tag -a v0.1.0 49e0cd22f6bd9510fe65084e023d9c4316b446a6
+
+27、发布标签
+	git push origin v0.1.0
+	将本地所有标签一次性提交到git服务器
+	git push origin –-tags
+
+28、Cherry-Pick 对已经存在的commit 进行 再次提交
+	git cherry-pick commit_id  #单个commit提交
+	
+	$ git checkout old_cc #当前分支
+	$ git cherry-pick 38361a68138140827b31b72f8bbfd88b3705d77a    # 其他分支的commit_id
+	
+	
+	
+29、添加单个文件
+	git add app/models/xxx.txt
+	
+
+30、删除远场分支
+	git push --delete origin dev-2.0-cj-sprint16-sendText  
+	git push origin --delete dev-2.0-cj-sprint16-sendText
+	git push origin :dev-2.0-cj-sprint16-sendText
+	git push origin :br  (origin 后面有空格)
+
+31、删除本地分支
+	git branch -d dev-2.0     
+	git branch -D dev-2.0    记录  D为强制
+
+31、重命名本地分支：
+	git branch -m devel develop
+
+32、重命名远程分支
+	a.删除远场分支
+		git push --delete origin dev-2.0-cj-sprint16-sendText  
+		git push origin --delete dev-2.0-cj-sprint16-sendText
+	
+	b.重命名本地分支
+		git branch -m dev-2.0-cj-sprint16-sendText dev-2.0-cj-test
+	
+
+	c.git push origin dev-2.0-cj-test
+
+
+33、git代码库回滚: 指的是将代码库某分支退回到以前的某个commit id
+    [本地代码库回滚]
+	git reset --hard commit-id :回滚到commit-id，讲commit-id之后提交的commit都去除
+	git reset --hard HEAD~3：将最近3次的提交回滚
+
+    [远程代码库回滚] 
+        应用场景：自动部署系统发布后发现问题，需要回滚到某一个commit，再重新发布
+	原理：先将本地分支退回到某个commit，删除远程分支，再重新push本地分支
+	操作步骤：
+		1、git checkout the_branch
+		2、git pull
+		3、git branch the_branch_backup //备份一下这个分支当前的情况
+		4、git reset --hard the_commit_id //把the_branch本地回滚到the_commit_id
+		5、git push origin :the_branch //删除远程 the_branch
+		6、git push origin the_branch //用回滚后的本地分支重新建立远程分支
+		7、git push origin :the_branch_backup //如果前面都成功了，删除这个备份分支
+
+
+34、如何拉取远程的某次提交覆盖本地
+	git fetch --all
+	git reset --hard e61d4f3e2e43d378c44731fc3bd6777fd4dd63a3 #commit_id
+	git pull origin e61d4f3e2e43d378c44731fc3bd6777fd4dd63a3
+
+35、如何拉取远程的某个分支覆盖本地分支
+	git fetch --all
+	git reset --hard origin/dev-2.0
+	git pull origin dev-2.0
+
+36、查看本地commit，没有提交的远程的commit次数
+	git status  #只能查看未传送提交的次数
+	git cherry -v #只能查看未传送提交的描述/说明
