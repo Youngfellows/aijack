@@ -1,0 +1,517 @@
+	1、导出log日志到桌面
+		adb logcat -v time  > Desktop/xxx.log
+		adb logcat -v time > C:/Users/Jie.Chen/Desktop/logcat/xxx.log
+		adb logcat -v process > C:/Users/Jie.Chen/Desktop/logcat/yyy.log
+		adb logcat -v time | grep "com.tonychen.uitest" > C:/Users/Jie.Chen/Desktop/logcat/zzz.java
+		adb logcat -v time | grep "com.tonychen.uitest" >> C:/Users/Jie.Chen/Desktop/logcat/yyy.java
+		adb logcat -v time | grep "com.aispeech.tvui" >> C:/Users/Jie.Chen/Desktop/logcat/log.java
+		adb logcat -v threadtime > D:\debug.txt
+		adb logcat -v threadtime 一定要有时间戳
+		adb logcat -v threadtime > C:/Users/Jie.Chen/Desktop/logcat/dianshijia_2017_12_28_logDSJ.log
+
+		adb logcat -v threadtime > C:/Users/Jie.Chen/Desktop/logcat/xxx20180102.log
+		adb logcat -v threadtime > C:/Users/Jie.Chen/Desktop/logcat/dds_repeat_update_resources1.log
+		adb logcat -v threadtime > C:/Users/Byron/Desktop/logcat/repeat_update_resource.log
+		
+		
+		输出到手机sdcard
+		adb logcat -f /sdcard/aispeex_jie.log
+		adb logcat -v threadtime -f /sdcard/Download/screen_on_update_app.log
+
+
+	2、push文件到文件夹
+		    (1) adb root
+		    (2) adb remount
+		    (3) adb shell mkdir  /etc/aios
+		    (5) adb push *** /etc/aios
+		
+		2、强制关闭aios
+			adb shell
+			am force-stop  com.aispeech.aios
+			am start -n com.aispeech.aios/com.aispeech.aios.MainActivity
+		        adb shell am force-stop  com.elinkway.tvlive2
+		
+		3、临时解决方案(板子重启后即失效)：
+		    (1) adb root
+		    (2) adb remount
+		    (3) adb 
+
+
+		    (4) chmod 777 /dev/et6034
+		    (5) am force-stop com.aispeech.aios
+		    (6) am start -n com.aispeech.aios/com.aispeech.aios.MainActivity
+
+
+	
+	3、如何push文件到sd卡
+		adb push D:\AIOSIOT\T6\iot-aiosbin\platform\public_simple\res\aios.provision /mnt/sdcard
+		adb push C:\Users\Jie.Chen\Desktop\musics /mnt/sdcard/music
+		adb push "C:\Users\Jie.Chen\Desktop\releasehotack1.1.8.180403.1tvui-tv-1.1.8.180403.1 - 副本\lib\armeabi\." /system/app/tvui/lib/arm
+		adb push C:\Users\Jie.Chen\Desktop\releasehotack1.1.8.180403.1package\. /system/etc/aispeech
+
+	3、如何pull文件到本地
+		adb pull /sdcard/aios/adapter/crash C:/Users/Jie.Chen/Desktop/crash_log
+		adb pull /sdcard/aios/data/aios_adapter.db C:/Users/Jie.Chen/Desktop/AiosDB
+		adb pull /data/anr C:/Users/Jie.Chen/Desktop/AiosDB/anr_log
+		adb pull /sdcard/result_command.log C:/Users/Jie.Chen/Desktop/crash_log
+		adb pull /sdcard/aios C:/Users/Jie.Chen/Desktop/
+		adb -s 889397b10604 pull /sdcard/tvui-assistant/crash C:/Users/Jie.Chen/Desktop/mi_crash_log
+		adb -s 7N2SQL14C3002746 pull /data/app/com.elinkway.tvlive2-2/base.apk  C:/Users/Jie.Chen/Desktop/logcat
+		adb pull /sdcard/aispeech C:\Users\Jie.Chen\Desktop\screen
+		adb pull /sdcard/aispeech_iot_tvui3.log C:\Users\Jie.Chen\Desktop\logcat
+
+
+	
+	4、查看进程
+		adb shell
+		 ps | grep aios
+
+	5、删除系统目录xxx.apk
+			C:\Users\Jie.Chen>adb remount
+			remount succeeded
+
+			C:\Users\Jie.Chen>adb root
+
+			C:\Users\Jie.Chen>adb shell
+			root@astar-evb30:/ # cd system/app
+			root@astar-evb30:/system/app # ls
+
+			rm aios-daemon-debug.apk
+	
+	6、开启一个线程
+		(1) adb shell am force-stop com.aispeech.adapter
+		adb shell am force-stop com.aispeech.adapter
+
+                (2) adb shell am start -n com.aispeech.adapter/com.aispeech.adapter.MainActivity	
+       
+       7、
+		//开机广播
+		adb shell am broadcast -a android.intent.action.BOOT_COMPLETED
+
+		//唤醒
+		adb shell am broadcast -a com.aispeech.ACTION_ADB_WAKEUP
+
+		//暂停
+		adb shell am broadcast -a com.aispeech.ACTION_ADB_PAUSE
+
+		//启动music的几个广播
+		adb shell am broadcast -a com.aispeech.aios.music.AICTION_SONG_SELECTED
+		adb shell am broadcast -a com.aispeech.tvui.music.BRING_TO_FRONT
+		adb shell am broadcast -a com.aispeech.tvui.music.BOOT_MUSIC_SERVICE
+		adb shell am broadcast -a android.intent.action.CLOSE_SYSTEM_DIALOGS
+
+      8、杀掉进程
+		adb shell am force-stop com.aispeech.tvui
+		adb shell am force-stop com.aispeech.tvui.installer
+		adb shell am force-stop com.aispeech.t6
+		adb shell am force-stop com.aispeech.adapter
+		adb shell am force-stop com.aispeech.aios
+
+
+
+      9、常用am命令启动Activity和Service
+	 adb shell am start -n com.android.launcher3/com.android.launcher3.Launcher
+	 adb shell am start -n com.aispeech.tvui.adapter/com.aispeech.tvui.adapter.LauncherActivity
+	 adb -s 192.168.3.62:5555 shell
+	 am startservice -n com.aispeech.tvui.adapter/com.aispeech.tvui.adapter.service.AdapterService
+	 
+	  adb -s 0123456789ABCDEF shell am startservice -n com.aispeech.tvui.installer/com.aispeech.tvui.installer.service.InstallerService
+	  adb shell am startservice -n com.aispeech.tvui.installer/com.aispeech.tvui.installer.service.InstallerService
+
+	  adb shell am startservice -a com.aispeech.t6.ClientService -n com.aispeech.t6/com.aispeech.t6.ClientService
+	
+	 
+	 启动电视家直播service
+	 adb shell am startservice -n com.aispeech.tvui.adapter/com.aispeech.tvui.adapter.service.AdapterService
+
+	 9.1 查看频道
+		adb shell am startservice -a com.elinkway.tvlive2.PlayChannelId -n com.elinkway.tvlive2/com.elinkway.tvlive2.rpc.IntentService  --es from com.byron.dianshijialive --es data_source http://7xo8iy.com2.z0.glb.qiniucdn.com/3rd.json --es channel_id cctv1
+		adb shell am startservice -a com.elinkway.tvlive2.PlayChannelId -n com.elinkway.tvlive2/com.elinkway.tvlive2.rpc.IntentService  --es from com.byron.dianshijialive --es data_source http://7xo8iy.com2.z0.glb.qiniucdn.com/3rd.json --es channel_id cctv2
+		adb shell am startservice -a com.elinkway.tvlive2.PlayChannelId -n com.elinkway.tvlive2/com.elinkway.tvlive2.rpc.IntentService  --es from com.byron.dianshijialive --es data_source http://7xo8iy.com2.z0.glb.qiniucdn.com/3rd.json --es channel_id cctv8
+		adb shell am startservice -a com.elinkway.tvlive2.PlayChannelId -n com.elinkway.tvlive2/com.elinkway.tvlive2.rpc.IntentService  --es from com.byron.dianshijialive --es data_source http://7xo8iy.com2.z0.glb.qiniucdn.com/3rd.json --es channel_id xizangjingjishenghuo
+
+		新接口(按频道ID点播)
+		adb shell am start -a com.elinkway.tvlive2.PlayChannelId -n com.elinkway.tvlive2/com.elinkway.tvlive2.activity.ThirdLauncherSplashActivity  --es from com.aispeech.tvui --es data_source http://cdn.idianshijia.com/tvlive/apk/json/3rd.json --es channel_id cctv1
+		adb -s 0123456789ABCDEF shell am start -a com.elinkway.tvlive2.PlayChannelId -n com.elinkway.tvlive2/com.elinkway.tvlive2.activity.ThirdLauncherSplashActivity  --es from com.aispeech.tvui --es data_source http://cdn.idianshijia.com/tvlive/apk/json/3rd.json --es channel_id cctv1
+		adb -s 192.168.4.153:5555 shell am start -a com.elinkway.tvlive2.PlayChannelId -n com.elinkway.tvlive2/com.elinkway.tvlive2.activity.ThirdLauncherSplashActivity  --es from com.aispeech.tvui --es data_source http://cdn.idianshijia.com/tvlive/apk/json/3rd.json --es channel_id cctv1
+
+
+	9.2 数字查频道
+		adb shell am startservice -a com.elinkway.tvlive2.ChangeChannel -n com.elinkway.tvlive2/com.elinkway.tvlive2.rpc.IntentService  --es from com.byron.dianshijialive --es channel_num 2
+
+		新接口(按频道号点播)
+		adb shell am start -a com.elinkway.tvlive2.ChangeChannel -n com.elinkway.tvlive2/com.elinkway.tvlive2.activity.ThirdLauncherSplashActivity  --es from com.aispeech.tvui --es channel_num 1
+		adb -s 0123456789ABCDEF shell am start -a com.elinkway.tvlive2.ChangeChannel -n com.elinkway.tvlive2/com.elinkway.tvlive2.activity.ThirdLauncherSplashActivity  --es from com.aispeech.tvui --es channel_num 1
+		adb -s 192.168.4.153:5555 shell am start -a com.elinkway.tvlive2.ChangeChannel -n com.elinkway.tvlive2/com.elinkway.tvlive2.activity.ThirdLauncherSplashActivity  --es from com.aispeech.tvui --es channel_num 1
+
+	9.3 上一台
+		adb shell am startservice -a com.elinkway.tvlive2.PreChannel -n com.elinkway.tvlive2/com.elinkway.tvlive2.rpc.IntentService  --es from com.byron.dianshijialive 
+	        
+		新接口
+		adb shell am start -a com.elinkway.tvlive2.PreChannel -n com.elinkway.tvlive2/com.elinkway.tvlive2.activity.ThirdLauncherSplashActivity  --es from com.aispeech.tvui
+		adb -s 0123456789ABCDEF shell am start -a com.elinkway.tvlive2.PreChannel -n com.elinkway.tvlive2/com.elinkway.tvlive2.activity.ThirdLauncherSplashActivity  --es from com.aispeech.tvui	
+		adb -s 192.168.4.153:5555 shell am start -a com.elinkway.tvlive2.PreChannel -n com.elinkway.tvlive2/com.elinkway.tvlive2.activity.ThirdLauncherSplashActivity  --es from com.aispeech.tvui
+
+		
+	     下一台
+	        adb shell am startservice -a com.elinkway.tvlive2.NextChannel -n com.elinkway.tvlive2/com.elinkway.tvlive2.rpc.IntentService  --es from com.byron.dianshijialive --es data_source http://cdn.idianshijia.com/tvlive/apk/json/3rd.json
+
+		新接口
+		adb shell am start -a com.elinkway.tvlive2.NextChannel -n com.elinkway.tvlive2/com.elinkway.tvlive2.activity.ThirdLauncherSplashActivity  --es from com.aispeech.tvui
+		adb -s 0123456789ABCDEF shell am start -a com.elinkway.tvlive2.NextChannel -n com.elinkway.tvlive2/com.elinkway.tvlive2.activity.ThirdLauncherSplashActivity  --es from com.aispeech.tvui
+		adb -s 192.168.4.153:5555 shell am start -a com.elinkway.tvlive2.NextChannel -n com.elinkway.tvlive2/com.elinkway.tvlive2.activity.ThirdLauncherSplashActivity  --es from com.aispeech.tvui
+
+
+	9.4 直接打开电视家app
+		adb shell am start -a com.elinkway.tvlive2.PlayChannelId -n com.elinkway.tvlive2/com.elinkway.tvlive2.activity.ThirdLauncherSplashActivity  --es from com.byron.dianshijialive --es data_source http://cdn.idianshijia.com/tvlive/apk/json/3rd.json --es channel_id cctv88999
+
+	 
+	 am broadcast -a aispeech.intent.action.VOICE --es keyAction "down"
+	 am broadcast -a aispeech.intent.action.VOICE --es keyAction "up"
+
+	 am broadcast -a aispeech.intent.action.VOICE --ei keyAction 0 //按下
+	 am broadcast -a aispeech.intent.action.VOICE --ei keyAction 1 //松开
+
+	 am broadcast -a aispeech.intent.action.vpr --es keyAction "next"
+	 am broadcast -a aispeech.intent.action.vpr --es keyAction "error"
+	
+
+	
+	9.5 广播发送语音，模拟语音输入CIBN接口调用实例
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "我要看功夫熊猫" 
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "周星驰导演的美人鱼" 
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "张艺谋导演的英雄本色" 
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "张艺谋导演的章子怡演的英雄本色" 
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "王宝强演的人在囧途" 
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "我要看电影"
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "我最近看了什么"
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "下一页"
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "上一页"
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "换一页"
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "李白的将进酒"
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "杜甫的望岳"
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "李白的诗"
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "李白的早发白帝城"
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "变形金刚三"
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "王维的送别"
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "王维的诗"
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "柳永的诗"
+
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "打开文件管理器"
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "打开爱奇艺"
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "打开银河奇异果"
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "打开直播"
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "打开播仕直播"
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "打开CIBN酷喵影视"
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "打开优酷"
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "打开云视听极光"
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "打开腾讯视频"
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "打开微博"
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "今天天气怎么样"
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "打开设置"
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "网络设置"
+	
+
+
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "播放中央一套"
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "播放湖南卫视"
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "播放深圳卫视"
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "播放广东卫视"
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "播放浙江卫视"
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "播放东方卫视"
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "播放东南卫视"
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "三十四台"
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "六十七台"
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "五十八台"
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "九台"
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "上一台"
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "下一台"
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "换个台"
+	adb shell am broadcast -a aispeech.tvui.action.command --es inputtext "我要看电视"
+
+
+
+
+	9.6 发送控制直播的广播指令
+	adb shell am broadcast -a com.aispeech.livetv.AI_LIVE_ACTION --es LIVE_COMMAND "OPEN_LIVE"  #打开直播
+	adb shell am broadcast -a com.aispeech.livetv.AI_LIVE_ACTION --es LIVE_COMMAND "NEXT_CHANNEL"  #下一台
+	adb shell am broadcast -a com.aispeech.livetv.AI_LIVE_ACTION --es LIVE_COMMAND "PRE_CHANNEL"  #下一台
+
+	adb shell am broadcast -a com.aispeech.livetv.AI_LIVE_ACTION --es CHANGE_CHANNEL_NUMBER 32 #数字换台
+	adb shell am broadcast -a com.aispeech.livetv.AI_LIVE_ACTION --es CHANGE_CHANNEL_ID "cctv-1" #按频道名称换台
+	adb shell am broadcast -a com.aispeech.livetv.AI_LIVE_ACTION --es SOURCE "DSJ_LIVE" #设置直播源数据
+	adb shell am broadcast -a com.aispeech.livetv.AI_LIVE_ACTION --es SOURCE "BOXER_LIVE" #设置直播源数据
+
+
+	
+	
+
+
+
+
+      10、获取所有app包名信息
+	 adb shell pm list packages 
+	 adb shell pm list packages > Desktop/appinfos.txt
+     
+      11、获取包名对应的APK 路径
+	 adb shell pm path fm.qingting.qtradio
+
+      12、获取手机的root权限
+		adb shell
+		su
+
+      13、pull 所有app到本地
+	  adb pull /data/app Desktop/hwapps
+
+      14、删除文字
+	input keyevent 67
+      
+      15、输入文字
+	input text 319
+
+
+      16、安装apk
+	 adb install -r -d xxxx.apk
+	 adb install -r xxx.apk
+
+	
+      17、查看一个服务是否运行
+		获  取所有系统服务: adb shell service list
+		应用程序创建的服务: adb shell dumpsys activity services 包名
+		应用程序创建的服务: adb shell dumpsys activity services | grep com.aispeech
+				    adb shell dumpsys activity services | grep BootService
+
+		通过关键字来获取服务: adb shell dumpsys activity services FloatWindowService
+		通过关键字来获取服务: adb shell dumpsys | findstr FloatWindowService
+				      adb shell dumpsys | findstr AdapterService
+				      adb shell dumpsys | findstr TVUIService
+				      adb shell dumpsys | findstr MUSICService
+				      adb shell dumpsys | findstr BootService
+		查看服务是否存在
+			adb shell
+			su 
+			ps | grep com.aispeech
+
+		查看service是否存在
+			adb shell check ClientService
+				    
+
+
+
+  18、开启adapter
+	adb -s 192.168.3.62:5555 shell
+	am startservice -n com.aispeech.tvui.adapter/com.aispeech.tvui.adapter.service.AdapterService
+	am startservice -n com.aispeech.tvui/com.aispeech.tvui.adapter.service.DDSService
+
+	adb shell am broadcast -a aispeech.intent.action.VOICE
+  
+  19、声纹识别广播
+	am broadcast -a aispeech.intent.action.VOICE --es keyAction "down"
+
+
+  20、无需root简单易用安卓wifi调试
+
+	这个只是一个小操作,三步:
+
+	1. 用数据线连接你的手机和电脑
+
+	2. 电脑终端执行命令: adb tcpip 5555
+
+	3. 电脑终端执行命令: adb connect 手机的ip
+
+	可能遇到的问题:
+
+	何时可以使用: 调试口被OTG占用或不想使用调试线
+	adb tcpip 5555 提示有多个设备, 此时可以杀死一个设备, adb kill-server 设备
+
+21、设置系统属性是否启用调试
+	1、在shell命令下执行
+		setprop debug.aispeech.tvui.conf_dev true
+		setprop aispeech.tvui.mic.conf_dev true
+		adb shell setprop debug.aispeech.tvui.conf_dev mediacenter=true,daemon=true,installer=true,mic=true,music=true,repairman=true,ddsdemon=true
+		adb shell setprop debug.aispeech.tvui.conf_dev daemon=true
+
+	2、在shell命令下执行 
+		setprop debug.aispeech.tvui.conf_dev false
+		setprop aispeech.tvui.mic.conf_dev false
+
+	4、在shell命令下执行
+		getprop debug.aispeech.tvui.conf_dev
+
+	3、	is_dev = SysPropUtil.getTvuiConfDev(TVUIApplication.getContext());
+		if ("true".equals(is_dev)) {
+		    addPreferencesFromResource(R.xml.pref_product);
+		} else {
+		    addPreferencesFromResource(R.xml.pref_public);
+		}
+
+
+	
+	4、
+
+
+22、  获取设备的像素以及项目密度
+	通过adb命令获取:
+	adb shell dumpsys window displays
+	adb shell wm size
+
+23、截图
+	方式1: 截图保存到SD卡里再导出
+		adb shell screencap -p /sdcard/screen.png
+		adb pull /sdcard/screen.png C:\Users\Jie.Chen\Desktop\screen
+		adb shell rm /sdcard/screen.png 
+
+	方式2: 截图直接保存到电脑
+		adb exec-out screencap -p > sc.png
+
+24、录制屏幕
+	adb shell screenrecord /sdcard/network_no_wending.mp4
+	ctrl + c
+	adb pull /sdcard/network_no_wending.mp4 C:\Users\Jie.Chen\Desktop\screen
+		
+25、输入字符
+	adb shell input text 15112431143
+
+26、删除字符
+	adb shell input keyevent 67
+
+27、模拟home按键
+	adb shell input keyevent 3
+
+28、模拟返回按键
+	adb shell input keyevent 4
+
+29、杀掉进程
+	adb shell
+	su 
+	ps | grep tvui
+	kill 1023
+
+30、获取签名信息
+		
+	1、到C:\Program Files\Java\jdk1.6.0_10\bin
+	keytool -genkey -alias android.keystore -keyalg RSA -validity 20000 -keystore android.keystore 
+
+keytool -genkey -alias debug.keystore -keyalg RSA -validity 20000 -keystore debug.keystore 
+
+
+	2、查看sha1
+		到keystore的目录
+		打开terminal或者cmd进入到keystore目录下，然后在终端中输入
+		keytool -v -list -keystore key.jks
+	       （也可以是keytool -v -list -keystore debug.keystore）命令即可查看调试环境下的MD5与SHA1
+
+
+	签名文件
+	       youngfellow.jks
+
+	       password:   8891709
+	       Alias: youngfellow   password: 8891709
+
+
+31、删除系统目录文件
+	adb root 
+	adb remount
+	adb shell 
+	adb system/app/
+	rm xxx
+
+
+32、分析内存
+	adb shell 
+	ps
+	dumpsys meminfo com.booslink.Wihome_videoplayer3
+
+
+33、查看分辨率
+	屏幕分辨率: adb shell wm size
+	屏幕密度: adb shell wm density
+	显示屏参数: adb shell dumpsys window displays
+
+34、亮屏、息屏广播
+	 adb shell am broadcast -a  android.intent.action.SCREEN_ON
+	 adb shell am broadcast -a  android.intent.action.SCREEN_OFF
+	 
+34、开机广播
+	1.发送开机广播
+		adb shell am broadcast -a  android.intent.action.BOOT_COMPLETED	
+
+	2.发送开机广播到某个应用
+		命令发送BOOT_COMPLETED广播，而不用重启测试机或模拟器来测试BOOT_COMPLETED广播，这条命令可以更精确的发送到某个package
+		adb shell am broadcast -a android.intent.action.BOOT_COMPLETED -c android.intent.category.HOME -n package_name/class_name
+		adb shell am broadcast -a android.intent.action.BOOT_COMPLETED -c android.intent.category.HOME -n com.aispeech.tvui.installer/com.aispeech.tvui.installer.update.receiver.UpdateAlarmReceiver
+	
+35、删除文件或者文件夹
+	adb -r 文件名
+	
+	adb remount
+	adb shell
+	su
+	cd system/sd/data //进入系统内指定文件夹
+	ls //列表显示当前文件夹内容
+	rm -r xxx //删除名字为xxx的文件夹及其里面的所有文件
+	rm xxx //删除文件xxx
+	rmdir xxx //删除xxx的文件夹
+
+36、查看MD5值
+	certutil -hashfile filename MD5  
+	certutil -hashfile filename SHA1  
+	certutil -hashfile filename SHA256
+
+
+37、查看设备类型
+	adb shell 
+	getprop | grep "chip"
+
+38、查看cup信息
+	adb shell cat /proc/cpuinfo
+
+
+39、adb的显示中文编码
+	chcp 65001
+
+
+
+40、查看正在运行的 Services
+	adb shell dumpsys activity services [<packagename>]
+
+41、查看应用详细信息
+	adb shell dumpsys package <packagename>
+
+
+42常用am命令启动Activity和Service
+	 adb shell am start -n com.android.launcher3/com.android.launcher3.Launcher
+	 adb shell am start -n com.aispeech.tvui.adapter/com.aispeech.tvui.adapter.LauncherActivity
+	 adb -s 192.168.3.62:5555 shell
+	 am startservice  -n com.aispeech.tvui.adapter/com.aispeech.tvui.adapter.service.AdapterService
+
+	 启动Installer
+	 adb shell am start -n com.aispeech.tvui.installer/com.aispeech.tvui.installer.LauncherActivity
+	 adb shell am startservice -a com.aispeech.tvui.installer.ACTION_DOWNLOAD -n com.aispeech.tvui.installer/com.aispeech.tvui.installer.update.service.DownloadService
+	 启动Installer
+	 adb shell am startservice -n com.aispeech.tvui.installer/com.aispeech.tvui.installer.update.service.DownloadService
+	 
+	 启动TVUI
+	 adb shell am start -n com.aispeech.tvui/com.aispeech.tvui.SettingsActivity
+	 
+
+43、发送进入播放场景的广播
+	adb shell am broadcast -a  com.aispeech.tvui.ACTION_NOTIFY_SCENES
+
+44、发送停止录音机,启动录音机的广播
+	adb shell am broadcast -a tvui.intent.action.RECORDER_STOP
+	adb shell am broadcast -a tvui.intent.action.RECORDER_START
+
+
+45、获取按键事件
+	adb shell
+	getevent
+
+
+46、设置配置文件
+	adb shell
+	setprop debug.aispeech.tvui.conf_path /sdcard/tvui.properties //设置配置文件目录属性
+	getprop debug.aispeech.tvui.conf_path //查看配置文件属性是否生效
+	将上述文件修改为tvui.properties，然后push到/sdcard目录下
+
+
